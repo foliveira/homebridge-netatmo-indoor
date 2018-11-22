@@ -1,7 +1,8 @@
 var Service,
   Characteristic,
   CustomCharacteristic,
-  FakeGatoHistoryService;
+  FakeGatoHistoryService,
+  NetatmoApi;
 
 module.exports = function (homebridge) {
   Service = homebridge.hap.Service;
@@ -9,20 +10,16 @@ module.exports = function (homebridge) {
 
   FakeGatoHistoryService = require('fakegato-history')(homebridge);
 
-  homebridge.registerPlatform("homebridge-netatmo-indoor", "NetatmoIndoor", NetatmoIndoorPlatform);
+  NetatmoApi = require('./netatmo-api');
+
+  homebridge.registerPlatform("homebridge-netatmo-indoor-aqm", "NetatmoIndoor", NetatmoIndoorPlatform);
 };
 
 function NetatmoIndoorPlatform(log, config, api) {
   this.log = log;
   this.config = config;
-  this.displayName = config['displayName'];
-  this.key = config['key'];
-  this.units = config['units'] || 'si';
-  this.location = config['location'];
-  this.locationGeo = config['locationGeo'];
-  this.locationCity = config['locationCity'];
-  this.forecastDays = ('forecast' in config ? config['forecast'] : []);
-  this.language = ('language' in config ? config['language'] : 'en');
+  this.displayName = config['name'];
+  this.getMeasurement = NetatmoApi(config);
   // Update interval
   this.interval = ('interval' in config ? parseInt(config['interval']) : 4);
   this.interval = (typeof this.interval !== 'number' || (this.interval % 1) !== 0 || this.interval < 0) ? 4 : this.interval;
