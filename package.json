@@ -1,0 +1,13 @@
+{
+  "name": "homebridge-netatmo-indoor",
+  "version": "1.0.0",
+  "description": "Homebridge plugin to use Netatmo's Indoor Air Quality Monitor with historical data",
+  "main": "index.js",
+  "repository": "git@github.com:foliveira/homebridge-netatmo-indoor.git",
+  "author": "Fabio Oliveira <fabio.an.oliveira@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "fakegato-history": "^0.5.2",
+    "netatmo": "^2.2.2"
+  }
+}
